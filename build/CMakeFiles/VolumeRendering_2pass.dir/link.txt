@@ -1,0 +1,1 @@
+/usr/bin/c++  -lGL -lX11 -lpthread -lXrandr -lXi -ldl -rdynamic CMakeFiles/VolumeRendering_2pass.dir/src/main_2pass.cc.o CMakeFiles/VolumeRendering_2pass.dir/src/glad.c.o -o VolumeRendering_2pass  /usr/lib/x86_64-linux-gnu/libglfw.so.3.3 libglad.a 
