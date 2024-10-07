@@ -28,8 +28,6 @@ float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
 // model rotation
-float modelRotationRad = 0.0;
-glm::vec3 modelRotationAxis = glm::vec3(0.0, 0.0, 1.0);
 glm::mat4 modelRotation = glm::rotate(glm::mat4(1.0f), 0.0f, glm::vec3(0.0, 0.0, 1.0));
 
 // timing
@@ -147,7 +145,7 @@ int main()
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);  
     unsigned char *data = stbi_load(
-        "/home/fanchenchi/Desktop/opengl/data/bunny_fill.png", 
+        "/home/fanchenchi/Desktop/opengl/data/bunny.png", 
         &width, &height, &nrChannels, 0
     );
     // std::cout << width << std::endl << height << std::endl << nrChannels << std::endl;
@@ -180,7 +178,7 @@ int main()
 
         // render
         // ------
-        glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+        glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
         // bind Texture
@@ -281,16 +279,17 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
     lastX = xpos;
     lastY = ypos;
 
-    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_RELEASE)
-        camera.ProcessMouseMovementTranslate(xoffset, yoffset, deltaTime);
+    // if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) != GLFW_RELEASE)
+    //     camera.ProcessMouseMovementTranslate(xoffset, yoffset, deltaTime);
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) != GLFW_RELEASE) {
         xoffset *= deltaTime;
         yoffset *= deltaTime;
-        modelRotationRad = glm::sqrt(xoffset*xoffset + yoffset*yoffset);
+        float rotateRadian = glm::sqrt(xoffset*xoffset + yoffset*yoffset);
         glm::vec3 rotateDirectionCamera = glm::vec3(xoffset, yoffset, 0.0);
         glm::vec4 rotateDirectionWorld = glm::inverse(camera.GetViewMatrix()) * glm::vec4(rotateDirectionCamera, 1);
-        modelRotationAxis = glm::cross(-camera.Front, rotateDirectionWorld.xyz() / rotateDirectionWorld.w);
-        modelRotation = glm::rotate(modelRotation, modelRotationRad, modelRotationAxis);
+        glm::vec3 rotateAxis = glm::cross(-camera.Front, rotateDirectionWorld.xyz() / rotateDirectionWorld.w);
+        
+        modelRotation = glm::rotate(modelRotation, rotateRadian, (glm::inverse(modelRotation) * glm::vec4(rotateAxis, 1.0)).xyz());
     }
 }
 

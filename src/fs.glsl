@@ -40,8 +40,8 @@ float colorBlending(vec3 startingPoint, vec3 endingPoint) {
 			texture(texture1, TexCoord2DFloor).r, 
 			texture(texture1, TexCoord2DCeil).r, 
 			fraction
-		) * 2.0;
-		FragColor = vec4(intensity, intensity, intensity, 1);
+		) * 16.0;
+		// FragColor = vec4(intensity, intensity, intensity, 1);
 		start += stepVector;
 	}
 	return max(intensity, 1.0);
