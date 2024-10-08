@@ -12,6 +12,10 @@
 
 #include <iostream>
 
+#define STRING(x) #x
+#define XSTRING(x) STRING(x)
+std::string sourceRoot = std::string(XSTRING(SOURCE_ROOT));
+
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
@@ -75,8 +79,8 @@ int main()
     // build and compile our shader zprogram
     // ------------------------------------
     Shader rayCasting(
-        "/home/fanchenchi/Desktop/opengl/src/vs.glsl", 
-        "/home/fanchenchi/Desktop/opengl/src/fs.glsl"
+        (sourceRoot + "/src/vs.glsl").c_str(), 
+        (sourceRoot + "/src/fs.glsl").c_str()
     ); 
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -145,7 +149,7 @@ int main()
     int width, height, nrChannels;
     stbi_set_flip_vertically_on_load(true);  
     unsigned char *data = stbi_load(
-        "/home/fanchenchi/Desktop/opengl/data/bunny.png", 
+        (sourceRoot + "/data/bunny.png").c_str(), 
         &width, &height, &nrChannels, 0
     );
     // std::cout << width << std::endl << height << std::endl << nrChannels << std::endl;

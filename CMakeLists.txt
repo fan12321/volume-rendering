@@ -28,6 +28,8 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/include)
 # Link each target with other targets or add options, etc.
 
 # Adding something we can run - Output name matches target name
+add_compile_definitions("SOURCE_ROOT=${CMAKE_SOURCE_DIR}")
+
 add_executable(VolumeRendering 
   ${CMAKE_SOURCE_DIR}/src/main.cc
   ${CMAKE_SOURCE_DIR}/src/glad.c
